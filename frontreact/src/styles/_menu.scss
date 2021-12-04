@@ -13,6 +13,8 @@ header.menu {
   z-index: 10;
 
   div.menu-container {
+    display: flex;
+    align-items: center;
     width: 100%;
     background-color: #040a2b;
     padding: 0 20px;
@@ -20,11 +22,12 @@ header.menu {
     min-height: 4.375rem;
 
     div.menu-holder {
+      display: flex;
+      align-items: center;
       position: relative;
       width: 100%;
       max-width: $siteWidth;
       margin: 0 auto;
-      display: flex;
       justify-content: flex-start;
       gap: 2rem;
     }

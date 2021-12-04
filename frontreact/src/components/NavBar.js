@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { I18nSelect } from './I18nSelect';
 
 export const NavBar = ({ onSearchKeyChange, setLanguage }) => {
-  const [navState, setNavState] = useState({ showingSearch: false });
+  const [navState, setNavState] = React.useState({ showingSearch: false });
 
   const showSearchContainer = (event) => {
     event.preventDefault();
@@ -18,18 +18,18 @@ export const NavBar = ({ onSearchKeyChange, setLanguage }) => {
           <h1>ISIS 3710</h1>
           <nav className='menu-items'>
             <div className='menu-links'>
-              <Link className='nav-item' aria-current='page' to='/'>
-                Home
+              <Link className='nav-item' aria-current='page' to='/home'>
+                <FormattedMessage id='home'/>
               </Link>
               <Link className='nav-item' aria-current='page' to='/report'>
-                Report
+                <FormattedMessage id='report'/>
               </Link>
             </div>
             <div className='menu-actions'>
               <span onClick={(e) => showSearchContainer(e)}>
                 <i className='material-icons search'>search</i>
               </span>
-              <I18nSelect></I18nSelect>
+              <I18nSelect setLanguage={(newLang) => setLanguage(newLang)}/>
             </div>
           </nav>
         </div>

@@ -5,6 +5,11 @@ const spanish = {
     report: 'Reporte',
     home: 'Inicio',
     gallery: 'Galería',
+    spanish: 'Español',
+    english: 'Inglés',
+    unitsInStock: "Unidades en inventario",
+    units: "Unidades",
+    products: "Productos",
   },
 };
 
