@@ -4,17 +4,17 @@ import {FormattedMessage} from "react-intl";
 import {Chart} from "../components/Chart";
 import {getProductsService} from "../services/product";
 
-export const Report = () => {
+export const Report = ({searchKey}) => {
   const [products, setProducts] = React.useState([]);
 
     React.useEffect(() => {
         const getProducts = async () => {
-            const prods = await getProductsService();
+            const prods = await getProductsService(searchKey);
             setProducts(prods);
         };
 
         getProducts();
-    }, [])
+    }, [searchKey, products])
 
   return (
     <section id='report'>

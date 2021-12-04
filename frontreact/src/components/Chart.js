@@ -32,7 +32,10 @@ export const Chart = ({ width = 600, height = 770, data }) => {
       .padding(0.1);
 
     const div = d3.select(barChart.current).append("div")
-        .style("opacity", 0);
+        .style("position", "absolute")
+        .style("width", "100px")
+        .style("height", "100px")
+        .style("background", "red");
 
     const bars = g.selectAll("rect").data(data);
 
@@ -43,9 +46,11 @@ export const Chart = ({ width = 600, height = 770, data }) => {
         .attr("y", d => y(Number.parseFloat(d.stock)))
         .attr("height", d => iheight - y(Number.parseFloat(d.stock)))
         .attr("width", x.bandwidth())
-        .on("mouseover", () => {return div.style("visibility", "visible");})
-        .on("mousemove", () => {return div.style("top", (event.pageY-800)+"px").style("left",(event.pageX-800)+"px");})
-        .on("mouseout", () => {return div.style("visibility", "hidden");});
+        .on("mouseover", () => {
+          return div.style("visibility", "visible").html("Holaaaaaaaaaaaaaa");
+        })
+        .on("mousemove", (e) => {return div.style("top", (e.y)+"px").style("left",(e.x)+"px");})
+        .on("mouseout", (e) => {return div.style("visibility", "hidden");});
 
     g.append("g")
         .classed("x--axis", true)

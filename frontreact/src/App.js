@@ -28,7 +28,7 @@ function App() {
             path='/home'
             element={<Home searchKey={searchState.searchKey} />}
           />
-          <Route exact path='/report' element={<Report />} />
+          <Route exact path='/report' element={<Report searchKey={searchState.searchKey} />} />
         </Routes>
       </main>
     </IntlProvider>
