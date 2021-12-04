@@ -14,7 +14,7 @@ export const Report = ({searchKey}) => {
         };
 
         getProducts();
-    }, [searchKey, products])
+    }, [searchKey])
 
   return (
     <section id='report'>

@@ -3,15 +3,25 @@ import {useIntl} from "react-intl";
 import * as d3 from 'd3';
 
 export const Chart = ({ width = 600, height = 770, data }) => {
+  const [show, setShow] = React.useState(false);
+  const [tooltipPosition, setTooltipPosition] = React.useState({x: 0, y:0});
+  const [tooltipContent, setTooltipContent] = React.useState();
   const barChart = React.useRef();
   const intl = useIntl();
+
+  const showDetail = (event, data) => {
+    setShow(true);
+    const {clientX, clientY} = event;
+    setTooltipContent(data.name);
+    setTooltipPosition({x: clientX, y:clientY});
+  };
 
   React.useEffect(() => {
     const margin = { top: 10, left: 50, bottom: 160, right: 10 };
     const iwidth = width - margin.left - margin.right;
     const iheight = height - margin.top - margin.bottom;
 
-    if (barChart.current) d3.select("g").remove();
+    if (barChart.current) {d3.select("g").remove()}
 
     const svg = d3.select(barChart.current);
     svg.attr('width', width);
@@ -31,12 +41,6 @@ export const Chart = ({ width = 600, height = 770, data }) => {
       .range([0, iwidth])
       .padding(0.1);
 
-    const div = d3.select(barChart.current).append("div")
-        .style("position", "absolute")
-        .style("width", "100px")
-        .style("height", "100px")
-        .style("background", "red");
-
     const bars = g.selectAll("rect").data(data);
 
     bars.enter().append("rect")
@@ -46,11 +50,10 @@ export const Chart = ({ width = 600, height = 770, data }) => {
         .attr("y", d => y(Number.parseFloat(d.stock)))
         .attr("height", d => iheight - y(Number.parseFloat(d.stock)))
         .attr("width", x.bandwidth())
-        .on("mouseover", () => {
-          return div.style("visibility", "visible").html("Holaaaaaaaaaaaaaa");
+        .on("mouseover",  (_event, d) => {
+          showDetail(_event, d);
         })
-        .on("mousemove", (e) => {return div.style("top", (e.y)+"px").style("left",(e.x)+"px");})
-        .on("mouseout", (e) => {return div.style("visibility", "hidden");});
+        .on("mouseleave", () => setShow(false));
 
     g.append("g")
         .classed("x--axis", true)
@@ -76,11 +79,24 @@ export const Chart = ({ width = 600, height = 770, data }) => {
         .attr("transform", "translate(" + ((width / 2) - 50) + "," + (5) + ")")
         .text(intl.formatMessage({id: "products"}));
 
-  }, [intl.locale, data]);
+  }, [intl, intl.locale, data, height, width]);
 
   return (
     <div id='chartArea'>
       <svg ref={barChart}/>
+      {show &&
+      <div
+          style={{
+            position: "absolute",
+            zIndex: "100",
+            top: tooltipPosition.y,
+            left: tooltipPosition.x,
+            background: "lightblue",
+          }}
+      >
+        {tooltipContent}
+      </div>}
     </div>
   );
 };
+
