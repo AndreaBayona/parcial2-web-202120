@@ -45,7 +45,7 @@ export const Chart = ({ width = 600, height = 770, data }) => {
 
     bars.enter().append("rect")
         .attr("class", "bar")
-        .style("fill", "blue")
+        .style("fill", "darkblue")
         .attr("x", d => x(d.name))
         .attr("y", d => y(Number.parseFloat(d.stock)))
         .attr("height", d => iheight - y(Number.parseFloat(d.stock)))
